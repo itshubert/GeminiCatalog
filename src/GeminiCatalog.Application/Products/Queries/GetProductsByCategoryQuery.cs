@@ -1,0 +1,38 @@
+using ErrorOr;
+using GeminiCatalog.Application.Common.Interfaces;
+using GeminiCatalog.Application.Common.Models.Common;
+using GeminiCatalog.Application.Common.Models.Products;
+using MapsterMapper;
+using MediatR;
+
+namespace GeminiCatalog.Application.Products.Queries;
+
+public sealed record GetProductsByCategoryQuery(Guid CategoryId, int PageNumber, int PageSize)
+    : IRequest<ErrorOr<PagedResultModel<ProductSummaryModel>>>;
+
+public sealed class GetProductsByCategoryQueryHandler
+    : IRequestHandler<GetProductsByCategoryQuery, ErrorOr<PagedResultModel<ProductSummaryModel>>>
+{
+    private readonly IProductRepository _repository;
+    private readonly IMapper _mapper;
+
+    public GetProductsByCategoryQueryHandler(IProductRepository repository, IMapper mapper)
+    {
+        _repository = repository;
+        _mapper = mapper;
+    }
+
+    public async Task<ErrorOr<PagedResultModel<ProductSummaryModel>>> Handle(GetProductsByCategoryQuery request, CancellationToken cancellationToken)
+    {
+        var (totalRecords, products) = await _repository.GetProductsByCategoryAsync(request.CategoryId, request.PageNumber, request.PageSize);
+
+        var productSummaries = _mapper.Map<IEnumerable<ProductSummaryModel>>(products);
+
+        return new PagedResultModel<ProductSummaryModel>(
+            Items: productSummaries,
+            TotalCount: totalRecords,
+            PageNumber: request.PageNumber,
+            PageSize: request.PageSize
+        );
+    }
+}

@@ -10,11 +10,22 @@ public sealed class ProductRepository : BaseRepository, IProductRepository
     {
     }
 
-    public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(string categoryName)
+    public async Task<(int TotalRecords, IEnumerable<Product> Products)> GetProductsByCategoryAsync(
+        Guid categoryId,
+        int pageNumber,
+        int pageSize)
     {
-        return await _context.Products
-            .Where(p => p.Categories.Any(c => c.Name == categoryName))
+        var query = _context.Products
+            .Where(p => p.Categories.Any(c => c.Id == categoryId) && p.Active);
+            
+        var totalCount = await query.CountAsync();
+        
+        var products = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
+
+        return (totalCount, products);
     }
     
     public async Task<Product?> GetProductByIdAsync(Guid productId)
