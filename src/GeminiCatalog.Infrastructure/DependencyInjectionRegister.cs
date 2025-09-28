@@ -20,6 +20,7 @@ public static class DependencyInjectionRegister
 
         services.AddScoped<PublishDomainEventsInterceptor>();
         services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<ICategoryRepository, CategoryRepository>();
 
         return services;
     }
