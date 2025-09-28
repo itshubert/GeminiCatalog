@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Seed Database": {
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)"
+    },
+    "Clear Database": {
+      "commandName": "Project",
+      "commandLineArgs": "--clear",
+      "workingDirectory": "$(ProjectDir)"
+    }
+  }
+}
