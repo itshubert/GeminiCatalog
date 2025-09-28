@@ -1,10 +1,11 @@
+using GeminiCatalog.Domain.Common.Models;
 using GeminiCatalog.Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GeminiCatalog.Infrastructure.Persistence.Configurations;
 
-public sealed class ConfigureProduct : IEntityTypeConfiguration<Product>
+public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
 {
     public void Configure(EntityTypeBuilder<Product> builder)
     {
@@ -19,16 +20,27 @@ public sealed class ConfigureProduct : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Description)
             .HasMaxLength(1000);
 
+        // Configure Price as a value object using conversion
         builder.Property(p => p.Price)
             .IsRequired()
-            .HasColumnType("decimal(18,2)");
+            .HasColumnName("Price")
+            .HasColumnType("decimal(18,2)")
+            .HasConversion(
+                price => price.Value,
+                value => Price.Create(value).Value);
+
+        builder.Property(p => p.Active)
+            .IsRequired()
+            .HasDefaultValue(true);
 
         builder.Property(p => p.CreatedAt)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
 
         builder.Property(p => p.UpdatedAt)
             .IsRequired()
-            .HasDefaultValueSql("GETUTCDATE()");
+            .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");
+
+        // Many-to-many relationship with Categories is configured in CategoryConfiguration
     }
 }

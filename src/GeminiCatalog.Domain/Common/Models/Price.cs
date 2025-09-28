@@ -6,7 +6,7 @@ public sealed class Price
 {
     private Price(decimal amount) => Value = amount;
 
-    public decimal Value { get; }
+    public decimal Value { get; private set; }
 
     public static ErrorOr<Price> Create(decimal amount)
     {
