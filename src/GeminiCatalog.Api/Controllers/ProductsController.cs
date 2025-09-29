@@ -36,5 +36,18 @@ public sealed class ProductsController : ApiController
             errors => Problem(errors));
     }
 
+    [HttpGet("{productId:guid}/summary")]
+    public async Task<IActionResult> GetProductSummary([FromRoute] Guid productId)
+    {
+        var query = new GetProductSummaryQuery(productId);
+        var response = await Mediator.Send(query);
+
+        return response.Match(
+            result => result is not null
+                ? Ok(Mapper.Map<ProductSummaryResponse>(result))
+                : NotFound(),
+            Problem);
+    }
+
 }
 

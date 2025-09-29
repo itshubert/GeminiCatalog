@@ -1,4 +1,8 @@
-# @HostAddress=https://localhost:4001
-@HostAddress=https://localhost:10001
+@HostAddress=https://localhost:4001
+#@HostAddress=https://localhost:10001
 
 GET {{HostAddress}}/products?categoryId=1a61798d-db9b-4602-8b09-3e6be83c443c&page=1&pageSize=3
+
+###
+
+GET {{HostAddress}}/products/00d5d543-71a1-4149-ae8b-6695a38d448c/summary
