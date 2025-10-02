@@ -33,6 +33,19 @@ public sealed class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired()
             .HasDefaultValue(true);
 
+        builder.Property(p => p.AvailableStock)
+            .IsRequired()
+            .HasDefaultValue(0);
+
+        builder.Property(p => p.StockStatus)
+            .IsRequired()
+            .HasConversion<string>()
+            .HasMaxLength(50)
+            .HasDefaultValue(StockStatus.OutOfStock);
+
+        builder.Property(p => p.LastStockUpdate)
+            .IsRequired(false);
+
         builder.Property(p => p.CreatedAt)
             .IsRequired()
             .HasDefaultValueSql("NOW() AT TIME ZONE 'UTC'");

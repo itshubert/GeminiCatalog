@@ -12,6 +12,9 @@ public sealed class Product : AggregateRoot<Guid>
     public string Description { get; private set; } = null!;
     public Price Price { get; private set; }
     public bool Active { get; private set; } = false;
+    public int AvailableStock { get; private set; } = 0;
+    public StockStatus StockStatus { get; private set; } = StockStatus.OutOfStock;
+    public DateTimeOffset? LastStockUpdate { get; private set; }
     public DateTimeOffset CreatedAt { get; private set; }
     public DateTimeOffset UpdatedAt { get; private set; }
 
@@ -73,6 +76,21 @@ public sealed class Product : AggregateRoot<Guid>
     public void ClearCategories()
     {
         _categories.Clear();
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
+
+    public void UpdateStock(int newStock)
+    {
+        AvailableStock = newStock;
+        StockStatus = newStock > 0 ? StockStatus.InStock : StockStatus.OutOfStock;
+        LastStockUpdate = DateTimeOffset.UtcNow;
+        UpdatedAt = DateTimeOffset.UtcNow;
+    }
+
+    public void SetStockStatus(StockStatus stockStatus)
+    {
+        StockStatus = stockStatus;
+        LastStockUpdate = DateTimeOffset.UtcNow;
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 }
