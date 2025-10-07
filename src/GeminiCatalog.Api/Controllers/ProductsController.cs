@@ -1,3 +1,4 @@
+using GeminiCatalog.Application.Products.Commands;
 using GeminiCatalog.Application.Products.Queries;
 using GeminiCatalog.Contracts;
 using MapsterMapper;
@@ -46,6 +47,17 @@ public sealed class ProductsController : ApiController
             result => result is not null
                 ? Ok(Mapper.Map<ProductSummaryResponse>(result))
                 : NotFound(),
+            Problem);
+    }
+
+    [HttpPost("refresh-stocks")]
+    public async Task<IActionResult> RefreshAllStocks([FromBody] IEnumerable<Guid> productIds, CancellationToken cancellationToken)
+    {
+        var command = new RefreshAllStocksCommand(productIds, cancellationToken);
+        var response = await Mediator.Send(command);
+
+        return response.Match(
+            result => Ok(),
             Problem);
     }
 

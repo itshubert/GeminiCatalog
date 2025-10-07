@@ -1,8 +1,43 @@
-#@HostAddress=https://localhost:4001
-@HostAddress=https://localhost:10001
+@HostAddress=https://localhost:4001
+#@HostAddress=https://localhost:10001
 
 GET {{HostAddress}}/products?categoryId=1a61798d-db9b-4602-8b09-3e6be83c443c&page=1&pageSize=3
 
 ###
 
 GET {{HostAddress}}/products/00d5d543-71a1-4149-ae8b-6695a38d448c/summary
+
+###
+
+POST {{HostAddress}}/products/refresh-stocks
+Content-Type: application/json
+
+    [
+"00d5d543-71a1-4149-ae8b-6695a38d448c",
+"1a308cf3-2bea-45cd-9575-c396db342ad3",
+"31b52f2c-15e9-4c1c-a16b-cea8b399c079",
+"3c786e85-950f-403a-9b98-92db416e3b6d",
+"41ba7f39-3004-422d-a56b-dd2ca55e5f07",
+"4341716a-c715-4880-885b-6b2386cef131",
+"4c98a8b0-8af9-43de-ab83-9955da847374",
+"520b88f7-40d3-4986-b62c-f8a748ec82b3",
+"59353bbd-9f8b-485e-950c-d652da82180d",
+"6edefeb6-88cf-48f4-a7b2-04a2841704f1",
+"74f589cb-088f-416b-8174-fff991e8729f",
+"80557fde-8f72-4283-986f-33482f3857f9",
+"861edca3-be5e-487e-b40f-c028c719cd24",
+"8722c875-948e-4f5a-bbb5-ff0f476cd1bb",
+"8a22ed7b-9ff8-435b-97bf-055c84ef0b4c",
+"8b2b3ddf-07fe-4e49-8f71-0a9997fb977b",
+"a53e7a1c-9501-4eb0-b718-04b278de5b81",
+"aade6b4e-705c-4419-ba51-4beb7af75894",
+"ba4eab1d-28d0-400d-b594-9de214e49380",
+"c9d046b6-0d04-4d97-9e8c-877deb15b1c0",
+"d471fff3-5b7b-44e8-ba10-987ef8d1b736",
+"e0403c1b-2172-4eb3-a1ce-b84a5792885f",
+"e2416012-7ad8-431a-9372-24cca3519c2b",
+"e4e3b4e9-f014-46bf-9857-c41d375a11fc",
+"e8d0ae06-aa77-4465-9468-c735f08f5ed1",
+"ea92803d-9def-46fb-8bc7-3754a355179c",
+"f2f8ed2e-783d-4c03-8ac4-67b5dca79498"
+    ]

@@ -79,6 +79,8 @@ public sealed class Product : AggregateRoot<Guid>
         UpdatedAt = DateTimeOffset.UtcNow;
     }
 
+    // TODO: Need to consume InventoryLevelChanged event to update stock
+
     public void UpdateStock(int newStock)
     {
         AvailableStock = newStock;
