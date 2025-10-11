@@ -1,0 +1,4 @@
+# @HostAddress=https://localhost:4001
+@HostAddress=https://localhost:10001
+
+GET {{HostAddress}}/categories
