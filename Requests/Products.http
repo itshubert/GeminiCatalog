@@ -1,4 +1,4 @@
-@HostAddress=https://localhost:4001
+@HostAddress=http://localhost:4000
 #@HostAddress=https://localhost:10001
 
 GET {{HostAddress}}/products?categoryId=1a61798d-db9b-4602-8b09-3e6be83c443c&page=1&pageSize=3
@@ -41,3 +41,7 @@ Content-Type: application/json
 "ea92803d-9def-46fb-8bc7-3754a355179c",
 "f2f8ed2e-783d-4c03-8ac4-67b5dca79498"
     ]
+
+###
+
+https://localhost:10001/products?categoryId=3a8f39a8-8e4e-4ead-a7c9-b8890331b18e&page=1&pageSize=10
