@@ -1,6 +1,10 @@
 @HostAddress=http://localhost:4000
 #@HostAddress=https://localhost:10001
 
+GET {{HostAddress}}/catalog/health
+
+###
+
 GET {{HostAddress}}/products?categoryId=1a61798d-db9b-4602-8b09-3e6be83c443c&page=1&pageSize=3
 
 ###
